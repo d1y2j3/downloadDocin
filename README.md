@@ -4,17 +4,6 @@
 
 Download materials in Docin freely and automatically
 
-**本工具已封装为EXE可执行程序，发布了release，可直接下载使用，无需搭建任何环境（想要了解实现细节的可以继续往下看）**
-
-如遇图片显示不全，请到我的[博客](https://www.jianshu.com/p/3817e06d6a92)观看，欢迎点赞留言！
-
-最近在查找资料时，在[豆丁网](https://www.docin.com/)上找到不少有用的资料，比如说一些课程的PPT之类的，但是只能在线看，而且还有广告，但是下载下来要钱，而且要价不菲，于是动起了歪脑筋，寻思着搞一个爬虫直接下载下来就可以离线看了，也方便资料的存储管理。本教程已完结，请放心食用，效果如下（该效果图采用[screentogif](https://www.screentogif.com/)软件录制，特此鸣谢）：
-
-![豆丁网资料自动下载效果展示](https://upload-images.jianshu.io/upload_images/5714082-ebcd2d95e82f1869.gif?imageMogr2/auto-orient/strip)
-
-本代码免费开源，不想了解原理的可以跳过到使用部分直接使用，希望能给我点个赞以支持开发，如果方便的话，github来一颗星星更好啦！
-
-开源代码地址：[https://github.com/you8023/downloadDocin](https://github.com/you8023/downloadDocin)，直接下载按照使用方法使用即可，如遇问题，欢迎在文章下方留言或在[github](https://github.com/you8023/downloadDocin/issues)上提issue。
 
 ## 开发环境
 * Windows 10
@@ -87,7 +76,23 @@ pip install requests
 首先，使用`requests`获取网页内容，并使用`lxml`将其封装为一个HTML对象方便后续解析：
 
 ```python
-html = etree.HTML(requests.get(originUrl).text)
+    headers = {
+               'Host': 'www.docin.com',
+               'Sec-Ch-Ua': '"(Not(A:Brand";v="8", "Chromium";v="100"',
+               'Sec-Ch-Ua-Mobile': '?0',
+               'Sec-Ch-Ua-Platform': '"Windows"',
+               'Upgrade-Insecure-Requests': '1',
+               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36',
+               'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+               'Sec-Fetch-Site': 'none',
+               'Sec-Fetch-Mode': 'navigate',
+               'Sec-Fetch-User': '?1',
+               'Sec-Fetch-Dest': 'document',
+               'Accept-Encoding': 'gzip, deflate',
+               'Accept-Language': 'zh-CN,zh;q=0.9'}
+    
+    html = etree.HTML(requests.get(originUrl,headers=headers).text)
+
 ```
 
 然后使用`xpath`提取标题：
