@@ -22,6 +22,22 @@ class Docin_download:
 
     def getTiltleUrl(self, originUrl):
         # 获取资料的标题和通用的url链接
+        headers = {
+               'Host': 'www.docin.com',
+               'Sec-Ch-Ua': '"(Not(A:Brand";v="8", "Chromium";v="100"',
+               'Sec-Ch-Ua-Mobile': '?0',
+               'Sec-Ch-Ua-Platform': '"Windows"',
+               'Upgrade-Insecure-Requests': '1',
+               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36',
+               'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+               'Sec-Fetch-Site': 'none',
+               'Sec-Fetch-Mode': 'navigate',
+               'Sec-Fetch-User': '?1',
+               'Sec-Fetch-Dest': 'document',
+               'Accept-Encoding': 'gzip, deflate',
+               'Accept-Language': 'zh-CN,zh;q=0.9'}
+    
+        html = etree.HTML(requests.get(originUrl,headers=headers).text)      
         html = etree.HTML(requests.get(originUrl).text)
         theHTML = etree.tostring(html).decode('utf-8')
         # print(theHTML)
